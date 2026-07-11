@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elena Voss Art • Murals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Inter:wght@300;400;500&amp;display=swap');
+        
+        :root {
+            --accent: #E11D48;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .heading-serif {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        .art-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .art-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        /* Bright thin side color on all frames */
+        .bright-border {
+            border-left: 4px solid #E11D48;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .modal {
+            animation: modalPop 0.3s ease forwards;
+        }
+
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #E11D48;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .mural-img {
+            transition: transform 0.5s ease;
+        }
+        
+        .art-card:hover .mural-img {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-[#FAF7F2] text-[#1F2937]">
+    <!-- Navbar -->
+    <nav class="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between h-20">
+            <button id="back-arrow" class="hidden md:hidden text-2xl text-gray-700 absolute left-6 top-1/2 -translate-y-1/2">
+    <i class="fas fa-arrow-left"></i>
+</button>
+                <!-- Logo -->
+                <div class="flex items-center gap-x-3 ml-12">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Creative artistic logo - flowing brush strokes + EV monogram -->
+                        <path d="M8 12 Q14 8 22 14 Q30 20 38 10" stroke="#E11D48" stroke-width="3.5" stroke-linecap="round"/>
+                        <path d="M10 22 Q18 18 26 26 Q34 34 42 24" stroke="#0F766E" stroke-width="2.5" stroke-linecap="round"/>
+                        <circle cx="24" cy="24" r="7" fill="#E11D48" fill-opacity="0.15"/>
+                        <text x="24" y="28" text-anchor="middle" fill="#1F2937" font-size="11" font-weight="700" font-family="Playfair Display, serif">EV</text>
+                    </svg>
+                    <div>
+                        <div class="font-bold text-2xl tracking-tighter heading-serif">Elena Voss</div>
+                        <div class="text-[10px] text-[#E11D48] font-medium -mt-1">ART</div>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-x-10 text-sm font-medium">
+                    <a href="#gallery" class="nav-link text-gray-700 hover:text-[#E11D48]">Gallery</a>
+                    <a href="#about" class="nav-link text-gray-700 hover:text-[#E11D48]">About</a>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-[#E11D48]">Contact</a>
+                    <a href="#gallery" 
+                       class="px-6 py-2.5 bg-[#E11D48] hover:bg-[#BE123C] text-white rounded-full text-sm font-semibold transition-colors flex items-center gap-x-2">
+                        <span>Explore Murals</span>
+                    </a>
+                </div>
+
+                <!-- Back Arrow -->
+
+
+<!-- Mobile Menu Button -->
+<button id="mobile-menu-btn" class="md:hidden text-2xl text-gray-700">
+    <i class="fas fa-bars"></i>
+</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="max-w-7xl mx-auto px-6 pt-16 pb-20">
+        <div class="max-w-3xl">
+            <div class="inline-flex items-center gap-x-2 px-4 py-1.5 bg-white rounded-full border border-gray-200 mb-6">
+                <div class="w-2 h-2 bg-[#E11D48] rounded-full animate-pulse"></div>
+                <span class="text-sm font-medium text-gray-600">Based in New York • Creating worldwide</span>
+            </div>
+            
+            <h1 class="text-6xl md:text-7xl font-bold tracking-tighter heading-serif leading-none mb-6">
+                Walls that<br> 
+                <span class="text-[#E11D48]">breathe stories.</span>
+            </h1>
+            
+            <p class="text-xl text-gray-600 max-w-lg mb-10">
+                I create large-scale murals that transform spaces into living narratives 
+                of color, emotion, and connection.
+            </p>
+            
+            <div class="flex flex-wrap gap-4">
+                <a href="#" id="browse-btn"
+                   class="px-8 py-4 bg-[#1F2937] hover:bg-black text-white rounded-2xl font-semibold flex items-center gap-x-3 transition-all active:scale-[0.985]">
+                    <span>Browse the Collection</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="#contact" 
+                   class="px-8 py-4 border border-gray-300 hover:bg-white rounded-2xl font-semibold flex items-center gap-x-3 transition-all">
+                    <span>Commission a Mural</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="fixed top-20 right-[-100%] w-full h-[calc(100vh-5rem)] bg-[#FAF7F2] overflow-y-auto transition-all duration-500 z-40 max-w-none px-6 py-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-y-4">
+            <div>
+               <div class="flex justify-between items-center mb-6">
+    <h2 class="text-4xl font-bold heading-serif tracking-tight">
+        The Collection
+    </h2>
+
+    
+</div>
+
+<p class="text-gray-600 mt-2">
+    50+ original murals • Updated regularly
+</p>
+                <p class="text-gray-600 mt-2">50+ original murals • Updated regularly</p>
+            </div>
+            
+            <!-- Search -->
+            <div class="relative w-full md:w-80">
+                <input type="text" id="search-input" 
+                       class="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-[#E11D48] bg-white"
+                       placeholder="Search murals...">
+                <i class="fas fa-search absolute left-4 top-4 text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="flex flex-wrap gap-2 mb-8" id="filter-buttons">
+            <button class="filter-btn active px-5 py-2 rounded-full text-sm font-medium bg-[#E11D48] text-white" data-filter="all">All</button>
+            <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-white border border-gray-200 hover:bg-gray-50" data-filter="Urban">Urban</button>
+            <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-white border border-gray-200 hover:bg-gray-50" data-filter="Nature">Nature</button>
+            <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-white border border-gray-200 hover:bg-gray-50" data-filter="Abstract">Abstract</button>
+            <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-white border border-gray-200 hover:bg-gray-50" data-filter="Figurative">Figurative</button>
+            <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-white border border-gray-200 hover:bg-gray-50" data-filter="Community">Community</button>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div id="gallery-grid" class="gallery-grid">
+            <!-- Artworks will be injected by JavaScript -->
+        </div>
+        
+        <div class="text-center mt-10 text-sm text-gray-500">
+            Showing 15 of 50+ murals • <span class="font-medium text-[#E11D48]">Contact me</span> to see the full archive
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="max-w-3xl mx-auto px-6 py-16 border-t border-gray-200">
+        <div class="text-center mb-10">
+            <h2 class="text-4xl font-bold heading-serif tracking-tight mb-3">Let’s create something together</h2>
+            <p class="text-gray-600">Interested in a commission or collaboration? I’d love to hear from you.</p>
+        </div>
+        
+        <form id="contact-form" class="space-y-6 max-w-xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium mb-1.5">Your Name</label>
+                    <input type="text" required class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-[#E11D48]">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1.5">Email Address</label>
+                    <input type="email" required class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-[#E11D48]">
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium mb-1.5">Project Type</label>
+                <select class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-[#E11D48]">
+                    <option>New Mural Commission</option>
+                    <option>Interior Mural</option>
+                    <option>Public / Community Project</option>
+                    <option>Restoration or Refresh</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium mb-1.5">Tell me about your project</label>
+                <textarea rows="5" required class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-[#E11D48] resize-y"></textarea>
+            </div>
+            
+            <button type="submit" 
+                    class="w-full py-4 bg-[#E11D48] hover:bg-[#BE123C] text-white font-semibold rounded-2xl transition-all">
+                Send Inquiry
+            </button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-8">
+        <div class="max-w-7xl mx-auto px-6 text-center text-sm text-gray-500">
+            © 2026 Elena Voss Art. All rights reserved.<br>
+            <span class="text-xs">Handcrafted with passion for walls that tell stories.</span>
+        </div>
+    </footer>
+<!-- About Page -->
+<section id="about-page" class="fixed top-0 left-[-100%] w-full h-screen bg-[#FAF7F2] z-[90] transition-all duration-500 overflow-y-auto">
+
+    <!-- Top Bar -->
+    <div class="bg-white h-20 flex items-center px-6 border-b border-gray-200">
+        <button id="about-back" class="text-2xl text-gray-700">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+
+        <h2 class="ml-6 text-2xl font-bold heading-serif">
+            About Elena
+        </h2>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-4xl mx-auto px-6 py-12">
+
+        <div class="bright-border pl-6 mb-8">
+            <h2 class="text-4xl font-bold heading-serif">
+                About Elena
+            </h2>
+
+            <div class="w-12 h-1 bg-[#E11D48] mt-4"></div>
+        </div>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">
+            For over 20 years, I've been painting the walls of cities, homes, and public spaces with murals that don't just decorate—they speak.
+        </p>
+
+        <p class="text-lg text-gray-600 leading-relaxed">
+            My work blends bold color, intricate detail, and deep emotional resonance. Whether it's a 50-foot urban wall or an intimate interior piece, every mural is a collaboration between the space and the story it deserves to tell.
+        </p>
+
+    </div>
+
+</section>
+    <!-- Artwork Modal -->
+    <div id="artwork-modal" class="hidden fixed inset-0 bg-black/70 z-[100] flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl modal">
+            <div class="flex justify-end p-4">
+                <button id="close-modal" class="text-3xl text-gray-400 hover:text-gray-600 transition-colors">×</button>
+            </div>
+            <div class="px-8 pb-8 grid md:grid-cols-2 gap-8">
+                <!-- Image -->
+                <div>
+                    <img id="modal-image" class="w-full rounded-2xl shadow-lg" alt="">
+                </div>
+                
+                <!-- Details -->
+                <div class="pt-2">
+                    <div id="modal-category" class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-[#E11D48] text-white mb-4"></div>
+                    
+                    <h3 id="modal-title" class="text-3xl font-bold heading-serif tracking-tight mb-1"></h3>
+                    <p id="modal-year" class="text-gray-500 mb-6"></p>
+                    
+                    <div class="space-y-4 text-sm">
+                        <div>
+                            <span class="font-semibold text-gray-700">Medium:</span> 
+                            <span id="modal-medium" class="text-gray-600"></span>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-gray-700">Size:</span> 
+                            <span id="modal-size" class="text-gray-600"></span>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-gray-700">Location:</span> 
+                            <span id="modal-location" class="text-gray-600"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 pt-6 border-t">
+                        <p id="modal-description" class="text-gray-600 leading-relaxed"></p>
+                    </div>
+                    
+                    <button onclick="inquireAboutPiece()" 
+                            class="mt-8 w-full py-3.5 bg-[#1F2937] hover:bg-black text-white rounded-2xl font-semibold flex items-center justify-center gap-x-2 transition-all">
+                        <i class="fas fa-envelope"></i>
+                        <span>Inquire about this piece</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent', '#E11D48');
+        }
+
+        // Sample Artwork Data (easy to expand to 50+)
+        const artworks = [
+            {
+                id: 1,
+                title: "Echoes of the City",
+                year: "2011",
+                category: "Urban",
+                medium: "Acrylic & Spray Paint on Concrete",
+                size: "42 ft × 18 ft",
+                location: "Downtown Brooklyn, NY",
+                description: "A vibrant exploration of urban rhythm and hidden stories in the concrete jungle.",
+                image:  "images/Artwork1.jpg"
+            },
+            {
+                id: 2,
+                title: "Whispers of the Forest",
+                year: "2012",
+                category: "Nature",
+                medium: "Acrylic on Brick",
+                size: "28 ft × 12 ft",
+                location: "Hudson Valley, NY",
+                description: "An immersive forest scene that brings the calm of nature into urban environments.",
+                image: "images/Artwork2.jpg"
+            },
+            {
+                id: 3,
+                title: "Fragments of Light",
+                year: "2013",
+                category: "Abstract",
+                medium: "Spray Paint & Gold Leaf",
+                size: "35 ft × 15 ft",
+                location: "Manhattan, NY",
+                description: "Abstract interplay of light, color, and movement inspired by stained glass.",
+                image: "images/Artwork3.jpg"
+            },
+            {
+                id: 4,
+                title: "The Guardian",
+                year: "2014",
+                category: "Figurative",
+                medium: "Acrylic on Wall",
+                size: "50 ft × 22 ft",
+                location: "Queens, NY",
+                description: "A powerful female figure representing strength and community protection.",
+                image: "images/Artwork4.jpg"
+            },
+            {
+                id: 5,
+                title: "Community Roots",
+                year: "2015",
+                category: "Community",
+                medium: "Acrylic & Mixed Media",
+                size: "30 ft × 14 ft",
+                location: "The Bronx, NY",
+                description: "Celebrating local history and the people who make the neighborhood vibrant.",
+                image: "images/Artwork5.jpg"
+            },
+            {
+                id: 6,
+                title: "Ocean Reverie",
+                year: "2016",
+                category: "Nature",
+                medium: "Acrylic on Concrete",
+                size: "38 ft × 16 ft",
+                location: "Coney Island, NY",
+                description: "A dreamy underwater world brought to life on a beachside wall.",
+                image: "images/Artwork6.jpg"
+            },
+            {
+                id: 7,
+                title: "Neon Dreams",
+                year: "2017",
+                category: "Urban",
+                medium: "Spray Paint & Neon Accents",
+                size: "25 ft × 10 ft",
+                location: "Williamsburg, Brooklyn",
+                description: "Bold neon-inspired mural capturing the energy of nightlife.",
+                image: "images/Artwork7.jpg"
+            },
+            {
+                id: 8,
+                title: "Eternal Bloom",
+                year: "2018",
+                category: "Abstract",
+                medium: "Acrylic & Oil",
+                size: "45 ft × 20 ft",
+                location: "Central Park Area",
+                description: "An abstract celebration of growth, renewal, and the beauty of imperfection.",
+                image: "images/Artwork8.jpg"
+            },
+            {
+                id: 9,
+                title: "Voices Unheard",
+                year: "2019",
+                category: "Figurative",
+                medium: "Acrylic on Wall",
+                size: "32 ft × 13 ft",
+                location: "Harlem, NY",
+                description: "Portraits of everyday heroes woven into a powerful community narrative.",
+                image: "images/Artwork9.jpg"
+            },
+            {
+                id: 10,
+                title: "Skyward",
+                year: "2020",
+                category: "Nature",
+                medium: "Spray Paint & Acrylic",
+                size: "40 ft × 18 ft",
+                location: "Jersey City, NJ",
+                description: "Birds in flight symbolizing freedom and aspiration above the city skyline.",
+                image: "images/Artwork10.jpg"
+            },
+            {
+                id: 11,
+                title: "Geometric Harmony",
+                year: "2021",
+                category: "Abstract",
+                medium: "Acrylic & Tape",
+                size: "22 ft × 9 ft",
+                location: "SoHo, Manhattan",
+                description: "Precise geometric forms balanced with organic color fields.",
+                image: "images/Artwork11.jpg"
+            },
+            {
+                id: 12,
+                title: "Youth Rising",
+                year: "2022",
+                category: "Community",
+                medium: "Acrylic & Spray Paint",
+                size: "36 ft × 15 ft",
+                location: "East Harlem",
+                description: "Empowering mural created in collaboration with local youth.",
+                image: "images/Artwork12.jpg"
+            },
+            {
+                id: 13,
+                title: "Midnight Garden",
+                year: "2023",
+                category: "Nature",
+                medium: "Acrylic on Brick",
+                size: "28 ft × 11 ft",
+                location: "Greenpoint, Brooklyn",
+                description: "A nocturnal garden full of mystery and delicate floral details.",
+                image: "images/Artwork13.jpg"
+            },
+            {
+                id: 14,
+                title: "Pulse of the Streets",
+                year: "2024",
+                category: "Urban",
+                medium: "Spray Paint",
+                size: "48 ft × 20 ft",
+                location: "Lower East Side",
+                description: "Dynamic lines and energy representing the heartbeat of the city.",
+                image: "images/Artwork14.jpg"
+            },
+            {
+                id: 15,
+                title: "Ancestral Echoes",
+                year: "2025",
+                category: "Figurative",
+                medium: "Acrylic & Gold Leaf",
+                size: "30 ft × 12 ft",
+                location: "Bedford-Stuyvesant",
+                description: "Honoring heritage through powerful ancestral figures and symbolic patterns.",
+                image: "images/Artwork15.jpg"
+            }
+        ];
+
+        // Render Gallery
+        function renderGallery(filteredArtworks) {
+            const grid = document.getElementById('gallery-grid');
+            grid.innerHTML = '';
+
+            filteredArtworks.forEach(art => {
+                const cardHTML = `
+                    <div class="art-card bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 cursor-pointer bright-border"
+                         onclick="showArtworkModal(${art.id})">
+                        <div class="relative overflow-hidden">
+                            <img src="${art.image}" alt="${art.title}" 
+                                 class="mural-img w-full h-72 object-cover">
+                            <div class="absolute top-4 right-4 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold">
+                                ${art.year}
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-semibold text-xl leading-tight pr-2">${art.title}</h3>
+                            </div>
+                            <div class="flex items-center gap-x-2 text-sm">
+                                <span class="px-3 py-0.5 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">${art.category}</span>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-3 line-clamp-2">${art.description}</p>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
+            });
+        }
+
+        // Filter + Search functionality
+        let currentFilter = 'all';
+
+        function filterArtworks() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            let filtered = artworks;
+
+            // Apply category filter
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(art => art.category === currentFilter);
+            }
+
+            // Apply search
+            if (searchTerm) {
+                filtered = filtered.filter(art => 
+                    art.title.toLowerCase().includes(searchTerm) || 
+                    art.description.toLowerCase().includes(searchTerm) ||
+                    art.category.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            renderGallery(filtered);
+        }
+
+        // Filter buttons
+        function setupFilters() {
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active from all
+                    buttons.forEach(b => b.classList.remove('active', 'bg-[#E11D48]', 'text-white'));
+                    buttons.forEach(b => b.classList.add('bg-white', 'border', 'border-gray-200'));
+                    
+                    // Add active to clicked
+                    btn.classList.add('active', 'bg-[#E11D48]', 'text-white');
+                    btn.classList.remove('bg-white', 'border', 'border-gray-200');
+                    
+                    currentFilter = btn.dataset.filter;
+                    filterArtworks();
+                });
+            });
+
+            // Search input
+            document.getElementById('search-input').addEventListener('input', filterArtworks);
+        }
+
+        // Show Modal
+        let currentArtwork = null;
+
+        function showArtworkModal(id) {
+            currentArtwork = artworks.find(a => a.id === id);
+            if (!currentArtwork) return;
+
+            document.getElementById('modal-image').src = currentArtwork.image;
+            document.getElementById('modal-title').textContent = currentArtwork.title;
+            document.getElementById('modal-year').textContent = currentArtwork.year;
+            document.getElementById('modal-category').textContent = currentArtwork.category;
+            document.getElementById('modal-medium').textContent = currentArtwork.medium;
+            document.getElementById('modal-size').textContent = currentArtwork.size;
+            document.getElementById('modal-location').textContent = currentArtwork.location;
+            document.getElementById('modal-description').textContent = currentArtwork.description;
+
+            document.getElementById('artwork-modal').classList.remove('hidden');
+            document.getElementById('artwork-modal').classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('artwork-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        // Inquire about piece
+        function inquireAboutPiece() {
+            closeModal();
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            
+            setTimeout(() => {
+                const form = document.getElementById('contact-form');
+                if (form) {
+                    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 800);
+        }
+
+        // Contact Form
+        function setupContactForm() {
+            const form = document.getElementById('contact-form');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Sending...`;
+                submitBtn.disabled = true;
+
+                setTimeout(() => {
+                    submitBtn.innerHTML = ` Message Sent!`;
+                    submitBtn.style.backgroundColor = '#10B981';
+                    
+                    setTimeout(() => {
+                        alert("Thank you! Elena will get back to you within 48 hours.");
+                        form.reset();
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.style.backgroundColor = '';
+                        submitBtn.disabled = false;
+                    }, 1800);
+                }, 1500);
+            });
+        }
+
+        // Mobile Menu
+        function setupMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            
+            btn.addEventListener('click', () => {
+                const menu = document.createElement('div');
+                menu.className = 'fixed inset-0 bg-black/50 z-[200] md:hidden';
+                menu.innerHTML = `
+                    <div class="bg-white w-3/4 h-full p-8">
+                        <div class="flex justify-between items-center mb-10">
+                            <div class="flex items-center gap-x-3">
+                                <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 12 Q14 8 22 14 Q30 20 38 10" stroke="#E11D48" stroke-width="3.5" stroke-linecap="round"/>
+                                    <path d="M10 22 Q18 18 26 26 Q34 34 42 24" stroke="#0F766E" stroke-width="2.5" stroke-linecap="round"/>
+                                </svg>
+                                <span class="font-bold text-xl">Elena Voss Art</span>
+                            </div>
+                            <button class="text-3xl">×</button>
+                        </div>
+                        
+                        <div class="flex flex-col gap-y-6 text-lg">
+                            <a href="#gallery" class="py-2">Gallery</a>
+                            <button id="about-btn" class="py-2 text-left" onclick="document.getElementById('about-page').style.left='0';">About</button>
+                            <a href="#contact" class="py-2">Contact</a>
+                            <a href="#gallery" class="mt-4 px-6 py-3 bg-[#E11D48] text-white rounded-2xl text-center font-semibold">Explore Murals</a>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(menu);
+                
+                menu.addEventListener('click', (e) => {
+                    if (e.target === menu || e.target.tagName === 'BUTTON' || e.target.closest('a')) {
+                        menu.remove();
+                    }
+                });
+            });
+        }
+
+        // Initialize everything
+        function init() {
+            initializeTailwind();
+            
+            // Render initial gallery
+            renderGallery(artworks);
+            
+            // Setup interactions
+            setupFilters();
+            setupContactForm();
+            setupMobileMenu();
+            
+            // Close modal when clicking outside
+            document.getElementById('artwork-modal').addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+            
+            // Close with X button
+            document.getElementById('close-modal').addEventListener('click', closeModal);
+            
+            // Keyboard escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === "Escape") {
+                    const modal = document.getElementById('artwork-modal');
+                    if (!modal.classList.contains('hidden')) {
+                        closeModal();
+                    }
+                }
+            });
+            
+            // Optional: Show first few artworks highlighted
+            console.log('%c[Elena Voss Art] Website loaded successfully. Ready for your real images!', 'color:#E11D48');
+        }
+
+       // Start the website
+document.addEventListener("DOMContentLoaded", () => {
+
+    const browseBtn = document.getElementById("browse-btn");
+    const gallery = document.getElementById("gallery");
+    const backArrow = document.getElementById("back-arrow");
+
+const aboutBtn = document.getElementById("about-btn");
+const aboutPage = document.getElementById("about-page");
+const aboutBack = document.getElementById("about-back");
+    // Open gallery
+    browseBtn.addEventListener("click", function(e) {
+        e.preventDefault();
+        gallery.style.right = "0";
+        backArrow.classList.remove("hidden");
+    });
+    
+    
+
+    // Back to home
+backArrow.addEventListener("click", function() {
+    gallery.style.right = "-100%";
+    aboutPage.style.left = "-100%";
+    backArrow.classList.add("hidden");
+});
+
+// Back from About page
+aboutBack.addEventListener("click", function() {
+    aboutPage.style.left = "-100%";
+    backArrow.classList.add("hidden");
+});
+
+    // Swipe right to go home
+    let startX = 0;
+
+    gallery.addEventListener("touchstart", function(e) {
+        startX = e.touches[0].clientX;
+    });
+
+    gallery.addEventListener("touchend", function(e) {
+        let endX = e.changedTouches[0].clientX;
+
+        if (endX - startX > 100) {
+            gallery.style.right = "-100%";
+            backArrow.classList.add("hidden");
+        }
+    });
+
+});
+        window.addEventListener("load", init);
+    </script>
+</body>
+</html>
