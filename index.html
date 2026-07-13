@@ -762,7 +762,7 @@ aboutLink.addEventListener("click", function(e) {
 
         // Initialize everything
         const aboutPage = document.getElementById("about-page");
-const backArrow = document.getElementById("about-back");
+const aboutBack = document.getElementById("about-back");
 const aboutLink = document.getElementById("about-link");
         function init() {
             initializeTailwind();
@@ -775,9 +775,9 @@ const aboutLink = document.getElementById("about-link");
             setupContactForm();
             setupMobileMenu();
             
-            aboutLink.addEventListener("click", function () {
+            aboutLink.addEventListener("click", function (e) {
+    e.preventDefault();
     aboutPage.style.right = "0";
-    backArrow.classList.remove("hidden");
 });
             
             // Close modal when clicking outside
