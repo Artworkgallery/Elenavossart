@@ -199,7 +199,47 @@
             Showing 15 of 50+ murals • <span class="font-medium text-[#E11D48]">Contact me</span> to see the full archive
         </div>
     </section>
+<!-- Slide Contact Panel -->
+<div id="contact-panel"
+class="fixed top-0 right-[-100%] w-full h-screen bg-white z-[300] transition-all duration-500 overflow-y-auto">
 
+    <div class="h-20 flex items-center justify-between px-6 border-b border-gray-200">
+        <h2 class="text-2xl font-bold heading-serif">
+            Contact Me
+        </h2>
+
+        <button id="contact-close" class="text-3xl">
+            ×
+        </button>
+    </div>
+
+    <div class="p-8 space-y-8">
+
+        <div>
+            <p class="text-gray-500 text-sm mb-2">
+                Email
+            </p>
+
+            <a href="mailto:artgallery2442@gmail.com"
+   class="text-lg text-black font-semibold">
+    artgallery2442@gmail.com
+</a>
+        </div>
+
+        <div>
+            <p class="text-gray-500 text-sm mb-2">
+                Phone
+            </p>
+
+            <a href="tel:+1628825826"
+   class="text-lg text-black font-semibold">
+    +1 628-825-826
+</a>
+        </div>
+
+    </div>
+
+</div>
     <!-- Contact Section -->
     <section id="contact" class="max-w-3xl mx-auto px-6 py-16 border-t border-gray-200">
         <div class="text-center mb-10">
@@ -250,7 +290,7 @@
         </div>
     </footer>
 <!-- About Page -->
-<section id="about-page" class="fixed top-0 left-[-100%] w-full h-screen bg-[#FAF7F2] z-[90] transition-all duration-500 overflow-y-auto">
+<section id="about-page" class="fixed top-0 right-[-100%] w-full h-screen bg-[#FAF7F2] z-[90] transition-all duration-500 overflow-y-auto">
 
     <!-- Top Bar -->
     <div class="bg-white h-20 flex items-center px-6 border-b border-gray-200">
@@ -285,6 +325,7 @@
     </div>
 
 </section>
+
     <!-- Artwork Modal -->
     <div id="artwork-modal" class="hidden fixed inset-0 bg-black/70 z-[100] flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl modal">
@@ -675,14 +716,23 @@
                         
                         <div class="flex flex-col gap-y-6 text-lg">
                             <a href="#gallery" class="py-2">Gallery</a>
-                            <button id="about-btn" class="py-2 text-left" onclick="document.getElementById('about-page').style.left='0';">About</button>
-                            <a href="#contact" class="py-2">Contact</a>
+                            <button id="about-btn" class="py-2 text-left" onclick="document.getElementById('about-page').style.right='0';">About</button>
+                            <button id="contact-btn" class="py-2 text-left">
+    Contact
+</button>
                             <a href="#gallery" class="mt-4 px-6 py-3 bg-[#E11D48] text-white rounded-2xl text-center font-semibold">Explore Murals</a>
                         </div>
                     </div>
                 `;
                 
                 document.body.appendChild(menu);
+                
+                const contactBtn = menu.querySelector("#contact-btn");
+                
+                contactBtn.addEventListener("click", () => {
+    menu.remove();
+    document.getElementById("contact-panel").style.right = "0";
+});
                 
                 menu.addEventListener('click', (e) => {
                     if (e.target === menu || e.target.tagName === 'BUTTON' || e.target.closest('a')) {
@@ -736,6 +786,16 @@ document.addEventListener("DOMContentLoaded", () => {
 const aboutBtn = document.getElementById("about-btn");
 const aboutPage = document.getElementById("about-page");
 const aboutBack = document.getElementById("about-back");
+
+const contactPanel = document.getElementById("contact-panel");
+const contactClose = document.getElementById("contact-close");
+
+document.querySelectorAll('a[href="#contact"]').forEach(btn => {
+    btn.addEventListener("click", function(e) {
+        e.preventDefault();
+        contactPanel.style.right = "0";
+    });
+});
     // Open gallery
     browseBtn.addEventListener("click", function(e) {
         e.preventDefault();
@@ -748,7 +808,7 @@ const aboutBack = document.getElementById("about-back");
     // Back to home
 backArrow.addEventListener("click", function() {
     gallery.style.right = "-100%";
-    aboutPage.style.left = "-100%";
+    aboutPage.style.right = "-100%";
     backArrow.classList.add("hidden");
 });
 
@@ -758,6 +818,9 @@ aboutBack.addEventListener("click", function() {
     backArrow.classList.add("hidden");
 });
 
+contactClose.addEventListener("click", function() {
+    contactPanel.style.right = "-100%";
+});
     // Swipe right to go home
     let startX = 0;
 
