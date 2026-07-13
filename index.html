@@ -99,7 +99,7 @@
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center gap-x-10 text-sm font-medium">
                     <a href="#gallery" class="nav-link text-gray-700 hover:text-[#E11D48]">Gallery</a>
-                    <a href="#about" class="nav-link text-gray-700 hover:text-[#E11D48]">About</a>
+                    <a href="#" id="about-link" class="nav-link text-gray-700 hover:text-[#E11D48]">About</a>
                     <a href="#contact" class="nav-link text-gray-700 hover:text-[#E11D48]">Contact</a>
                     <a href="#gallery" 
                        class="px-6 py-2.5 bg-[#E11D48] hover:bg-[#BE123C] text-white rounded-full text-sm font-semibold transition-colors flex items-center gap-x-2">
@@ -716,11 +716,18 @@ class="fixed top-0 right-[-100%] w-full h-screen bg-white z-[300] transition-all
                         
                         <div class="flex flex-col gap-y-6 text-lg">
                             <a href="#gallery" class="py-2">Gallery</a>
-                            <button id="about-btn" class="py-2 text-left" onclick="document.getElementById('about-page').style.right='0';">About</button>
-                            <button id="contact-btn" class="py-2 text-left">
+                            
+                            <button id="about-btn" class="py-2 text-left">
+    About
+</button>
+
+<button id="contact-btn" class="py-2 text-left">
     Contact
 </button>
-                            <a href="#gallery" class="mt-4 px-6 py-3 bg-[#E11D48] text-white rounded-2xl text-center font-semibold">Explore Murals</a>
+
+<a href="#gallery" class="mt-4 px-6 py-3 bg-[#E11D48] text-white rounded-2xl text-center font-semibold">
+    Explore Murals
+</a>
                         </div>
                     </div>
                 `;
@@ -728,12 +735,23 @@ class="fixed top-0 right-[-100%] w-full h-screen bg-white z-[300] transition-all
                 document.body.appendChild(menu);
                 
                 const contactBtn = menu.querySelector("#contact-btn");
-                
+                const aboutBtn = menu.querySelector("#about-btn");
+                const aboutLink = document.getElementById("about-link");
                 contactBtn.addEventListener("click", () => {
     menu.remove();
     document.getElementById("contact-panel").style.right = "0";
 });
-                
+                aboutBtn.addEventListener("click", () => {
+    menu.remove();
+    aboutPage.style.right = "0";
+    backArrow.classList.remove("hidden");
+});
+aboutLink.addEventListener("click", function(e) {
+    e.preventDefault();
+    aboutPage.style.right = "0";
+    backArrow.classList.remove("hidden");
+});
+
                 menu.addEventListener('click', (e) => {
                     if (e.target === menu || e.target.tagName === 'BUTTON' || e.target.closest('a')) {
                         menu.remove();
@@ -743,6 +761,9 @@ class="fixed top-0 right-[-100%] w-full h-screen bg-white z-[300] transition-all
         }
 
         // Initialize everything
+        const aboutPage = document.getElementById("about-page");
+const backArrow = document.getElementById("about-back");
+const aboutLink = document.getElementById("about-link");
         function init() {
             initializeTailwind();
             
@@ -753,6 +774,11 @@ class="fixed top-0 right-[-100%] w-full h-screen bg-white z-[300] transition-all
             setupFilters();
             setupContactForm();
             setupMobileMenu();
+            
+            aboutLink.addEventListener("click", function () {
+    aboutPage.style.right = "0";
+    backArrow.classList.remove("hidden");
+});
             
             // Close modal when clicking outside
             document.getElementById('artwork-modal').addEventListener('click', function(e) {
@@ -783,7 +809,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const gallery = document.getElementById("gallery");
     const backArrow = document.getElementById("back-arrow");
 
-const aboutBtn = document.getElementById("about-btn");
 const aboutPage = document.getElementById("about-page");
 const aboutBack = document.getElementById("about-back");
 
@@ -795,6 +820,11 @@ document.querySelectorAll('a[href="#contact"]').forEach(btn => {
         e.preventDefault();
         contactPanel.style.right = "0";
     });
+});
+document.getElementById("about-link").addEventListener("click", function(e) {
+    e.preventDefault();
+    aboutPage.style.right = "0";
+    backArrow.classList.remove("hidden");
 });
     // Open gallery
     browseBtn.addEventListener("click", function(e) {
@@ -814,7 +844,7 @@ backArrow.addEventListener("click", function() {
 
 // Back from About page
 aboutBack.addEventListener("click", function() {
-    aboutPage.style.left = "-100%";
+    aboutPage.style.right = "-100%";
     backArrow.classList.add("hidden");
 });
 
